@@ -1,10 +1,10 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'jsonapi_parser/version'
+require 'json/api/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'jsonapi_parser'
-  spec.version       = JsonApiParser::VERSION
+  spec.version       = JSON::API::VERSION
   spec.authors       = ['Lucas Hosseini']
   spec.email         = ['lucas.hosseini@gmail.com']
   spec.summary       = 'Parse JSON API documents'
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(spec)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'json'
+  spec.add_dependency 'json', '~>1.8'
 
   spec.add_development_dependency 'rspec', '~>3.4'
 end
