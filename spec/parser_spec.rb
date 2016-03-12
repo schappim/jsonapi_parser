@@ -1,7 +1,7 @@
 require 'json'
-require 'jsonapi_parser'
+require 'json/api'
 
-describe JsonApiParser, '#parse' do
+describe JSON::API, '#parse' do
   before(:all) do
     @payload = {
       'data' => [
@@ -38,7 +38,7 @@ describe JsonApiParser, '#parse' do
   end
 
   it 'works' do
-    document = JsonApiParser.parse(@payload)
+    document = JSON::API.parse(@payload)
 
     expect(document.data.first.link_defined?(:self)).to be_truthy
     expect(document.data.first.links.self.value).to eq 'http://example.com/articles/1'

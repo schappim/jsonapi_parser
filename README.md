@@ -1,4 +1,4 @@
-# JsonApiParser
+# jsonapi_parser
 Parse and validate [JSON API](http://jsonapi.org) documents.
 
 ## Installation
@@ -20,12 +20,12 @@ $ gem install jsonapi_parser
 
 First, `require` the gem.
 ```ruby
-require 'jsonapi_parser'
+require 'json/api'
 ```
 
 Then, parse a hash representing a JSON API document:
 ```ruby
-document = JsonApiParser.parse(json_hash)
+document = JSON::API.parse(json_hash)
 ```
 
 In order to parse a JSON string, one can use `JSON.parse`:
@@ -37,7 +37,7 @@ json_hash = JSON.parse(json_string)
 
 ```ruby
   document_hash = JSON.parse(json_document)
-  document = JsonApiParser.parse(document_hash)
+  document = JSON::API.parse(document_hash)
   # Should the document be invalid, the parse method would fail with an
   #   InvalidDocument error.
 
