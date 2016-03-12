@@ -1,5 +1,6 @@
-require 'json/api/linkable'
 require 'json/api/exceptions'
+require 'json/api/linkable'
+require 'json/api/version'
 
 require 'json/api/attributes'
 require 'json/api/document'
@@ -11,14 +12,10 @@ require 'json/api/relationship'
 require 'json/api/relationships'
 require 'json/api/resource'
 require 'json/api/resource_identifier'
-require 'json/api/version'
+
+require 'json/api/parse'
 
 module JSON
   module API
-    module_function
-
-    def parse(hash, options = {})
-      Document.new(hash, options)
-    end
   end
 end

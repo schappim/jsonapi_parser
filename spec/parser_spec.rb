@@ -1,4 +1,3 @@
-require 'json'
 require 'json/api'
 
 describe JSON::API, '#parse' do

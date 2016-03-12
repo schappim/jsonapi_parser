@@ -23,21 +23,15 @@ First, `require` the gem.
 require 'json/api'
 ```
 
-Then, parse a hash representing a JSON API document:
+Then, parse a JSON API document:
 ```ruby
-document = JSON::API.parse(json_hash)
-```
-
-In order to parse a JSON string, one can use `JSON.parse`:
-```ruby
-json_hash = JSON.parse(json_string)
+document = JSON::API.parse(hash_or_json_string)
 ```
 
 ## Examples
 
 ```ruby
-  document_hash = JSON.parse(json_document)
-  document = JSON::API.parse(document_hash)
+  document = JSON::API.parse(json_document)
   # Should the document be invalid, the parse method would fail with an
   #   InvalidDocument error.
 
