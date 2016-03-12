@@ -8,16 +8,21 @@ module JSON
 
       def initialize(document_hash, options = {})
         @options = options
-        @data = parse_data(document_hash['data']) if document_hash.key?('data')
-        @meta = document_hash['meta'] if document_hash.key?('meta')
-        @errors = parse_errors(document_hash['errors']) if
-          document_hash.key?('errors')
+
+        @data_defined = document_hash.key?('data')
+        @data = parse_data(document_hash['data']) if @data_defined
+        @meta_defined = document_hash.key?('meta')
+        @meta = parse_meta(document_hash['meta']) if @meta_defined
+        @errors_defined = document_hash.key?('errors')
+        @errors = parse_errors(document_hash['errors']) if @errors_defined
+        @jsonapi_defined = document_hash.key?('jsonapi')
         @jsonapi = JsonApi.new(document_hash['jsonapi'], @options) if
-          document_hash.key?('jsonapi')
+          @jsonapi_defined
         @links_hash = document_hash['links'] || {}
         @links = Links.new(@links_hash, @options)
+        @included_defined = document_hash.key?('included')
         @included = parse_included(document_hash['included']) if
-          document_hash.key?('included')
+          @included_defined
 
         validate!
       end
@@ -30,14 +35,14 @@ module JSON
 
       def validate!
         case
-        when !@data && !@meta && !@errors
+        when !@data_defined && !@meta_defined && !@errors_defined
           fail InvalidDocument,
                "a document MUST contain at least one of 'data', 'meta', or" \
                " or 'errors' at top-level"
-        when @data && @errors
+        when @data_defined && @errors_defined
           fail InvalidDocument,
                "'data' and 'errors' MUST NOT coexist in the same document"
-        when !@data && @included
+        when !@data_defined && @included_defined
           fail InvalidDocument, "'included' MUST NOT be present unless 'data' is"
         when @options[:verify_duplicates] && duplicates?
           fail InvalidDocument,
@@ -71,6 +76,11 @@ module JSON
         else
           Resource.new(data_hash, @options.merge(id_optional: true))
         end
+      end
+
+      def parse_meta(meta_hash)
+        fail InvalidDocument, "the value of 'meta' MUST be an object" unless
+          meta_hash.is_a?(Hash)
       end
 
       def parse_included(included_hash)
