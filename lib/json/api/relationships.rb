@@ -18,6 +18,14 @@ module JSON
       def [](rel_name)
         @relationships[rel_name.to_s]
       end
+
+      def defined?(rel_name)
+        @relationships.key?(rel_name.to_s)
+      end
+
+      def keys
+        @relationships.keys
+      end
     end
   end
 end

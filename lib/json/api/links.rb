@@ -5,15 +5,21 @@ module JSON
       def initialize(links_hash, options = {})
         fail InvalidDocument, "the value of 'links' MUST be an object" unless
           links_hash.is_a?(Hash)
-        @links = links_hash
-        @links.each do |link_name, link_val|
-          instance_variable_set("@#{link_name}", Link.new(link_val, options))
-          singleton_class.class_eval { attr_reader link_name }
+        @links = {}
+        links_hash.each do |link_name, link_val|
+          @links[link_name.to_s] = Link.new(link_val, options)
+          define_singleton_method(link_name) do
+            @links[link_name.to_s]
+          end
         end
       end
 
       def defined?(link_name)
         @links.key?(link_name.to_s)
+      end
+
+      def [](link_name)
+        @links[link_name.to_s]
       end
     end
   end

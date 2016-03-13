@@ -2,8 +2,6 @@ module JSON
   module API
     # c.f. http://jsonapi.org/format/#document-resource-objects
     class Resource
-      include Linkable
-
       attr_reader :id, :type, :attributes, :relationships, :links, :meta
 
       def initialize(resource_hash, options = {})
@@ -19,22 +17,6 @@ module JSON
         @links_hash = resource_hash['links'] || {}
         @links = Links.new(@links_hash, @options)
         @meta = resource_hash['meta'] if resource_hash.key?('meta')
-      end
-
-      def attribute_defined?(attr_name)
-        @attributes_hash.key?(attr_name.to_s)
-      end
-
-      def attributes_keys
-        @attributes_hash.keys
-      end
-
-      def relationship_defined?(rel_name)
-        @relationships_hash.key?(rel_name.to_s)
-      end
-
-      def relationships_keys
-        @relationships_hash.keys
       end
 
       private

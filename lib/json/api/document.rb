@@ -2,8 +2,6 @@ module JSON
   module API
     # c.f. http://jsonapi.org/format/#document-top-level
     class Document
-      include Linkable
-
       attr_reader :data, :meta, :errors, :json_api, :links, :included
 
       def initialize(document_hash, options = {})

@@ -18,6 +18,14 @@ module JSON
       def [](attr_name)
         @attributes[attr_name.to_s]
       end
+
+      def defined?(attr_name)
+        @attributes.key?(attr_name.to_s)
+      end
+
+      def keys
+        @attributes.keys
+      end
     end
   end
 end

@@ -1,5 +1,4 @@
 require 'json/api/exceptions'
-require 'json/api/linkable'
 require 'json/api/version'
 
 require 'json/api/attributes'

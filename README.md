@@ -35,19 +35,19 @@ document = JSON::API.parse(hash_or_json_string)
   # Should the document be invalid, the parse method would fail with an
   #   InvalidDocument error.
 
-  document.data.link_defined?(:self)
+  document.data.links.defined?(:self)
   # => true
   document.data.links.self.value
   # => 'http://example.com/articles/1'
-  document.data.attributes_keys
+  document.data.attributes.keys
   # => ['title']
-  document.data.attribute_defined?(:title)
+  document.data.attributes.defined?(:title)
   # => true
   document.data.attributes.title
   # => 'JSON API paints my bikeshed!'
-  document.data.relationships_keys
+  document.data.relationships.keys
   # => ['author', 'comments']
-  document.data.relationship_defined?(:author)
+  document.data.relationships.defined?(:author)
   # => true
   document.data.relationships.author.collection?
   # => false
@@ -55,11 +55,11 @@ document = JSON::API.parse(hash_or_json_string)
   # => 9
   document.data.relationships.author.data.type
   # => 'people'
-  document.data.relationships.author.link_defined?(:self)
+  document.data.relationships.author.links.defined?(:self)
   # => true
   document.data.relationships.author.links.self.value
   # => 'http://example.com/articles/1/relationships/author'
-  document.data.relationship_defined?(:comments)
+  document.data.relationships.defined?(:comments)
   # => true
   document.data.relationships.comments.collection?
   # => true
@@ -69,7 +69,7 @@ document = JSON::API.parse(hash_or_json_string)
   # => 5
   document.data.relationships.comments.data[0].type
   # => 'comments'
-  document.data.relationships.comments.link_defined?(:self)
+  document.data.relationships.comments.links.defined?(:self)
   # => true
   document.data.relationships.comments.links.self.value
   # => 'http://example.com/articles/1/relationships/comments'
