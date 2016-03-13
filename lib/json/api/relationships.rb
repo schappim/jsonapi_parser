@@ -6,12 +6,17 @@ module JSON
         fail InvalidDocument,
              "the value of 'relationships' MUST be an object" unless
           relationships_hash.is_a?(Hash)
-        @relationships = relationships_hash
-        @relationships.each do |rel_name, rel_hash|
-          instance_variable_set("@#{rel_name}",
-                                Relationship.new(rel_hash, options))
-          singleton_class.class_eval { attr_reader rel_name }
+        @relationships = {}
+        relationships_hash.each do |rel_name, rel_hash|
+          @relationships[rel_name.to_s] = Relationship.new(rel_hash, options)
+          define_singleton_method(rel_name) do
+            @relationships[rel_name.to_s]
+          end
         end
+      end
+
+      def [](rel_name)
+        @relationships[rel_name.to_s]
       end
     end
   end

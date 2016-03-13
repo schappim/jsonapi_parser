@@ -6,11 +6,17 @@ module JSON
         fail InvalidDocument,
              "the value of 'attributes' MUST be an object" unless
           attributes_hash.is_a?(Hash)
-        @attributes = attributes_hash
-        @attributes.each do |attr_name, attr_val|
-          instance_variable_set("@#{attr_name}", attr_val)
-          singleton_class.class_eval { attr_reader attr_name }
+        @attributes = {}
+        attributes_hash.each do |attr_name, attr_val|
+          @attributes[attr_name.to_s] = attr_val
+          define_singleton_method(attr_name) do
+            @attributes[attr_name.to_s]
+          end
         end
+      end
+
+      def [](attr_name)
+        @attributes[attr_name.to_s]
       end
     end
   end
