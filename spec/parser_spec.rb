@@ -39,6 +39,7 @@ describe JSON::API, '#parse' do
   it 'works' do
     document = JSON::API.parse(@payload)
 
+    expect(document.data.first.links.keys).to eq ['self']
     expect(document.data.first.links.defined?(:self)).to be_truthy
     expect(document.data.first.links.self.value).to eq 'http://example.com/articles/1'
     expect(document.data.first.attributes.keys).to eq ['title']
@@ -49,6 +50,7 @@ describe JSON::API, '#parse' do
     expect(document.data.first.relationships.author.collection?).to be_falsy
     expect(document.data.first.relationships.author.data.id).to eq '9'
     expect(document.data.first.relationships.author.data.type).to eq 'people'
+    expect(document.data.first.relationships.author.links.keys).to eq ['self', 'related']
     expect(document.data.first.relationships.author.links.defined?(:self)).to be_truthy
     expect(document.data.first.relationships.author.links.self.value).to eq 'http://example.com/articles/1/relationships/author'
     expect(document.data.first.relationships.author.links.defined?(:related)).to be_truthy
@@ -60,6 +62,7 @@ describe JSON::API, '#parse' do
     expect(document.data.first.relationships.comments.data[0].type).to eq 'comments'
     expect(document.data.first.relationships.comments.data[1].id).to eq '12'
     expect(document.data.first.relationships.comments.data[1].type).to eq 'comments'
+    expect(document.data.first.relationships.comments.links.keys).to eq ['self', 'related']
     expect(document.data.first.relationships.comments.links.defined?(:self)).to be_truthy
     expect(document.data.first.relationships.comments.links.self.value).to eq 'http://example.com/articles/1/relationships/comments'
     expect(document.data.first.relationships.comments.links.defined?(:related)).to be_truthy

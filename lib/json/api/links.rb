@@ -21,6 +21,10 @@ module JSON
       def [](link_name)
         @links[link_name.to_s]
       end
+
+      def keys
+        @links.keys
+      end
     end
   end
 end
