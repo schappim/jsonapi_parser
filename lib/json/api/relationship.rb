@@ -7,11 +7,13 @@ module JSON
       def initialize(relationship_hash, options = {})
         @options = options
         @links_defined = relationship_hash.key?('links')
+        @data_defined = relationship_hash.key?('data')
+        @meta_defined = relationship_hash.key?('meta')
         links_hash = relationship_hash['links'] || {}
         @links = Links.new(links_hash, @options)
         @data = parse_linkage(relationship_hash['data']) if
-          relationship_hash.key?('data')
-        @meta = relationship_hash['meta'] if relationship_hash.key?('meta')
+          @data_defined
+        @meta = relationship_hash['meta'] if @meta_defined
 
         validate!
       end
@@ -24,7 +26,7 @@ module JSON
 
       def validate!
         case
-        when !@links_defined && !@data && !@meta
+        when !@links_defined && !@data_defined && !@meta_defined
           fail InvalidDocument,
                "a relationship object MUST contain at least one of 'links'," \
                " 'data', or 'meta'"

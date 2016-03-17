@@ -21,6 +21,9 @@ describe JSON::API, '#parse' do
               },
               'data' => { 'type' => 'people', 'id' => '9' }
             },
+            'journal' => {
+              'data' => nil
+            },
             'comments' => {
               'links' => {
                 'self' => 'http://example.com/articles/1/relationships/comments',
@@ -45,7 +48,7 @@ describe JSON::API, '#parse' do
     expect(document.data.first.attributes.keys).to eq ['title']
     expect(document.data.first.attributes.defined?(:title)).to be_truthy
     expect(document.data.first.attributes.title).to eq 'JSON API paints my bikeshed!'
-    expect(document.data.first.relationships.keys).to eq %w(author comments)
+    expect(document.data.first.relationships.keys).to eq %w(author journal comments)
     expect(document.data.first.relationships.defined?(:author)).to be_truthy
     expect(document.data.first.relationships.author.collection?).to be_falsy
     expect(document.data.first.relationships.author.data.id).to eq '9'
@@ -67,5 +70,8 @@ describe JSON::API, '#parse' do
     expect(document.data.first.relationships.comments.links.self.value).to eq 'http://example.com/articles/1/relationships/comments'
     expect(document.data.first.relationships.comments.links.defined?(:related)).to be_truthy
     expect(document.data.first.relationships.comments.links.related.value).to eq 'http://example.com/articles/1/comments'
+    expect(document.data.first.relationships.defined?(:journal)).to be_truthy
+    expect(document.data.first.relationships.journal.collection?).to be_falsy
+    expect(document.data.first.relationships.journal.data).to eq nil
   end
 end
