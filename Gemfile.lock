@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jsonapi_parser (0.3.0)
+    jsonapi_parser (0.4.0)
       json (~> 1.8)
 
 GEM
@@ -31,4 +31,4 @@ DEPENDENCIES
   rspec (~> 3.4)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

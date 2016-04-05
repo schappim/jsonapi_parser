@@ -79,6 +79,8 @@ module JSON
       def parse_meta(meta_hash)
         fail InvalidDocument, "the value of 'meta' MUST be an object" unless
           meta_hash.is_a?(Hash)
+
+        Meta.new(meta_hash)
       end
 
       def parse_included(included_hash)
